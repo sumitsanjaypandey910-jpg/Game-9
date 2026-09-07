@@ -292,13 +292,14 @@ export default function App() {
 
   // Drag and drop handlers
   const handleDragStartTile = (e: React.DragEvent, tileId: string) => {
-    e.dataTransfer.setData('text/plain', tileId);
+    if (e?.dataTransfer) {
+      e.dataTransfer.setData('text/plain', tileId);
+      e.dataTransfer.effectAllowed = 'move';
+    }
   };
 
-  const handleDropTile = (e: React.DragEvent, cellId: string) => {
-    e.preventDefault();
-    const tileId = e.dataTransfer.getData('text/plain');
-    if (tileId) {
+  const handleDropTile = (cellId: string, tileId: string) => {
+    if (cellId && tileId) {
       placeTileInCell(cellId, tileId);
     }
   };

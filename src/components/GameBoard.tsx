@@ -8,7 +8,7 @@ interface GameBoardProps {
   selectedCellId: string | null;
   erroneousCellIds: Set<string>;
   solvedEquationIds: Set<string>;
-  onCellClick: (cell: GridCell) => void;
+  onCellClick: (cellId: string) => void;
   onDropTile: (cellId: string, tileId: string) => void;
 }
 
@@ -94,7 +94,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                   <button
                     key={id}
                     id={`cell-${id}`}
-                    onClick={() => onCellClick(cell)}
+                    onClick={() => onCellClick(id)}
                     onDragOver={(e) => handleDragOver(e, id)}
                     onDragLeave={handleDragLeave}
                     onDrop={(e) => handleDrop(e, id)}
@@ -120,7 +120,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                 <button
                   key={id}
                   id={`cell-${id}`}
-                  onClick={() => onCellClick(cell)}
+                  onClick={() => onCellClick(id)}
                   onDragOver={(e) => handleDragOver(e, id)}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, id)}

@@ -4,8 +4,8 @@ import { RackTile } from '../types';
 interface RackProps {
   tiles: RackTile[];
   selectedTileId: string | null;
-  onTileClick: (tile: RackTile) => void;
-  onDragStartTile: (tile: RackTile, e: React.DragEvent) => void;
+  onTileClick: (tileId: string) => void;
+  onDragStartTile: (e: React.DragEvent, tileId: string) => void;
 }
 
 export const Rack: React.FC<RackProps> = ({
@@ -41,8 +41,8 @@ export const Rack: React.FC<RackProps> = ({
         key={tile.id}
         id={`rack-tile-${tile.id}`}
         draggable
-        onDragStart={(e) => onDragStartTile(tile, e)}
-        onClick={() => onTileClick(tile)}
+        onDragStart={(e) => onDragStartTile(e, tile.id)}
+        onClick={() => onTileClick(tile.id)}
         aria-label={`Number tile ${tile.value}`}
         className={`w-11 h-11 sm:w-13 sm:h-13 rounded-lg sm:rounded-xl flex items-center justify-center font-black text-base sm:text-lg tabular-nums cursor-grab active:cursor-grabbing transition-transform select-none ${
           isSelected
