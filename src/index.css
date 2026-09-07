@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-color: #4a448d;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Custom 3D button effects matching the screenshot */
+.tile-3d-white {
+  background: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 4px 0 #cbd5e1;
+}
+
+.tile-3d-white:active {
+  box-shadow: 0 1px 0 #cbd5e1;
+  transform: translateY(3px);
+}
+
+.tile-3d-green {
+  background: #8eefa4;
+  color: #14532d;
+  box-shadow: 0 4px 0 #4ade80;
+}
+
+.tile-3d-green:active {
+  box-shadow: 0 1px 0 #4ade80;
+  transform: translateY(3px);
+}
+
+.tile-3d-green-selected {
+  background: #6ee7b7;
+  color: #064e3b;
+  box-shadow: 0 2px 0 #34d399, 0 0 12px rgba(110, 231, 183, 0.6);
+  transform: translateY(2px) scale(1.04);
+}
+
+.tile-slot-empty {
+  background: rgba(49, 43, 98, 0.7);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(139, 131, 209, 0.25);
+}
+
+.tile-slot-selected {
+  background: rgba(88, 77, 172, 0.85);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 2px #fde047;
+}
+
+.tile-slot-error {
+  box-shadow: 0 0 0 2px #ef4444, inset 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
