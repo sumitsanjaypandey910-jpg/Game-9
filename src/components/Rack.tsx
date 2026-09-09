@@ -27,9 +27,9 @@ export const Rack: React.FC<RackProps> = ({
       return (
         <div
           key={tile.id}
-          className="w-11 h-11 sm:w-13 sm:h-13 rounded-lg sm:rounded-xl bg-black/20 border border-white/10 flex items-center justify-center opacity-40 cursor-default"
+          className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 max-w-[48px] rounded-lg sm:rounded-xl bg-black/25 border border-white/10 flex items-center justify-center opacity-40 cursor-default"
         >
-          <span className="text-white/30 font-bold text-sm sm:text-base tabular-nums">
+          <span className="text-white/30 font-bold text-xs xs:text-sm sm:text-base tabular-nums">
             {tile.value}
           </span>
         </div>
@@ -44,26 +44,28 @@ export const Rack: React.FC<RackProps> = ({
         onDragStart={(e) => onDragStartTile(e, tile.id)}
         onClick={() => onTileClick(tile.id)}
         aria-label={`Number tile ${tile.value}`}
-        className={`w-11 h-11 sm:w-13 sm:h-13 rounded-lg sm:rounded-xl flex items-center justify-center font-black text-base sm:text-lg tabular-nums cursor-grab active:cursor-grabbing transition-transform select-none ${
+        className={`w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 max-w-[48px] rounded-lg sm:rounded-xl flex items-center justify-center font-black text-sm xs:text-base sm:text-lg tabular-nums cursor-grab active:cursor-grabbing transition-all select-none ${
           isSelected
-            ? 'tile-3d-green-selected ring-2 ring-amber-300'
+            ? 'tile-3d-green-selected ring-3 ring-amber-300'
             : 'tile-3d-green hover:brightness-105 hover:-translate-y-0.5'
         }`}
       >
-        <span className="leading-none">{tile.value}</span>
+        <span className="leading-none text-[#052e16] font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.5)]">
+          {tile.value}
+        </span>
       </button>
     );
   };
 
   return (
-    <div className="w-full max-w-[420px] mx-auto px-3 py-2 flex flex-col items-center gap-2 select-none">
+    <div className="w-full max-w-[420px] mx-auto px-2 xs:px-3 py-1 sm:py-2 flex flex-col items-center gap-1.5 sm:gap-2 select-none">
       {/* Row 1 */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2 w-full">
+      <div className="flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 w-full">
         {row1.map(renderTileButton)}
       </div>
 
       {/* Row 2 */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2 w-full">
+      <div className="flex items-center justify-center gap-1 xs:gap-1.5 sm:gap-2 w-full">
         {row2.map(renderTileButton)}
       </div>
     </div>

@@ -17,17 +17,17 @@ export const ActionControls: React.FC<ActionControlsProps> = ({
   onReset,
 }) => {
   return (
-    <div className="w-full max-w-[420px] mx-auto px-4 py-3 flex items-center justify-between select-none">
+    <div className="w-full max-w-[420px] mx-auto px-3 xs:px-4 py-1.5 sm:py-2.5 flex items-center justify-between select-none">
       {/* Undo & Redo on the left */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 xs:gap-3">
         <button
           id="undo-button"
           onClick={onUndo}
           disabled={!canUndo}
           aria-label="Undo move"
-          className="w-11 h-11 rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
+          className="w-9 h-9 xs:w-10 xs:h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 disabled:opacity-25 disabled:cursor-not-allowed flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
         >
-          <Undo2 className="w-5 h-5 stroke-[2.2]" />
+          <Undo2 className="w-4 h-4 xs:w-5 xs:h-5 stroke-[2.2]" />
         </button>
 
         <button
@@ -35,9 +35,9 @@ export const ActionControls: React.FC<ActionControlsProps> = ({
           onClick={onRedo}
           disabled={!canRedo}
           aria-label="Redo move"
-          className="w-11 h-11 rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
+          className="w-9 h-9 xs:w-10 xs:h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 disabled:opacity-25 disabled:cursor-not-allowed flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
         >
-          <Redo2 className="w-5 h-5 stroke-[2.2]" />
+          <Redo2 className="w-4 h-4 xs:w-5 xs:h-5 stroke-[2.2]" />
         </button>
       </div>
 
@@ -46,9 +46,9 @@ export const ActionControls: React.FC<ActionControlsProps> = ({
         id="reset-button"
         onClick={onReset}
         aria-label="Reset puzzle"
-        className="w-11 h-11 rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
+        className="w-9 h-9 xs:w-10 xs:h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl border border-white/25 bg-white/10 hover:bg-white/15 active:bg-white/25 flex items-center justify-center text-white transition-all cursor-pointer shadow-sm"
       >
-        <RotateCcw className="w-5 h-5 stroke-[2.2]" />
+        <RotateCcw className="w-4 h-4 xs:w-5 xs:h-5 stroke-[2.2]" />
       </button>
     </div>
   );

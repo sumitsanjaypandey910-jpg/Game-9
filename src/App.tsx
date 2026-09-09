@@ -79,6 +79,29 @@ export default function App() {
     [cells, equations]
   );
 
+  // Set of cell IDs in the currently active/focused equation (row or col containing selectedCellId)
+  const activeEquationCellIds = useMemo(() => {
+    if (!selectedCellId) return new Set<string>();
+    const set = new Set<string>();
+    equations.forEach((eq) => {
+      if (eq.cells.includes(selectedCellId)) {
+        eq.cells.forEach((id) => set.add(id));
+      }
+    });
+    return set;
+  }, [selectedCellId, equations]);
+
+  // Set of cell IDs in any currently solved/completed equations
+  const solvedCellIds = useMemo(() => {
+    const set = new Set<string>();
+    equations.forEach((eq) => {
+      if (gameState.solvedEquationIds.has(eq.id)) {
+        eq.cells.forEach((id) => set.add(id));
+      }
+    });
+    return set;
+  }, [equations, gameState.solvedEquationIds]);
+
   // Previous solved equations count to play chime
   const [prevSolvedCount, setPrevSolvedCount] = useState(0);
 
@@ -474,7 +497,7 @@ export default function App() {
         />
       ) : (
         /* SCREEN 2: GAMEPLAY SCREEN */
-        <div className="h-screen max-h-[100dvh] w-full bg-[#4c468a] text-white flex flex-col justify-between items-center relative overflow-hidden select-none font-sans">
+        <div className="h-[100dvh] max-h-[100dvh] w-full bg-[#4c468a] text-white flex flex-col justify-between items-center relative overflow-hidden select-none font-sans overscroll-none">
           {/* Top Header with Home/Dashboard button & Unlimited Leaves badge */}
           <Header
             elapsedSeconds={elapsedSeconds}
@@ -506,12 +529,14 @@ export default function App() {
             selectedCellId={selectedCellId}
             erroneousCellIds={gameState.erroneousCellIds}
             solvedEquationIds={gameState.solvedEquationIds}
+            activeEquationCellIds={activeEquationCellIds}
+            solvedCellIds={solvedCellIds}
             onCellClick={handleCellClick}
             onDropTile={handleDropTile}
           />
 
           {/* Bottom Number Tray (Rack) */}
-          <div className="w-full pb-1">
+          <div className="w-full shrink-0 pb-1 sm:pb-2">
             <Rack
               tiles={rackTiles}
               selectedTileId={selectedTileId}

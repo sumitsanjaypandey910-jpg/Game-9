@@ -69,42 +69,42 @@ export const Dashboard: React.FC<DashboardProps> = ({
   return (
     <div className="min-h-screen w-full bg-[#3d3774] text-white flex flex-col items-center select-none font-sans overflow-y-auto pb-12">
       {/* Top Navigation Bar */}
-      <header className="w-full max-w-2xl px-4 py-4 flex items-center justify-between border-b border-white/10 bg-[#342e66]/80 backdrop-blur-md sticky top-0 z-30 shadow-md">
+      <header className="w-full max-w-2xl px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between border-b border-white/10 bg-[#342e66]/85 backdrop-blur-md sticky top-0 z-30 shadow-md">
         {/* Logo & Name */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 border border-emerald-300/40 font-black text-xl text-white">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 border border-emerald-300/40 font-black text-lg sm:text-xl text-white shrink-0">
             +
           </div>
           <div>
-            <h1 className="text-lg font-black tracking-wide leading-tight flex items-center gap-1.5">
+            <h1 className="text-base sm:text-lg font-black tracking-wide leading-tight flex items-center gap-1 sm:gap-1.5">
               CROSSMATH
-              <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 border border-emerald-400/30">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 border border-emerald-400/30">
                 PRO
               </span>
             </h1>
-            <p className="text-xs text-white/60 font-medium">Math Crossword Puzzle</p>
+            <p className="text-[11px] sm:text-xs text-white/60 font-medium hidden xs:block">Math Crossword Puzzle</p>
           </div>
         </div>
 
         {/* Top Badges (Leaves, Stars, Sound, Help) */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* UNLIMITED LEAVES BADGE */}
           <button
             id="dashboard-leaves-badge"
             onClick={() => setShowLeavesModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 hover:bg-emerald-500/30 active:scale-95 transition cursor-pointer group shadow-sm"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 hover:bg-emerald-500/30 active:scale-95 transition cursor-pointer group shadow-sm"
             title="Unlimited Leaves Status"
             aria-label="Unlimited leaves status"
           >
-            <span className="text-base animate-pulse">🍃</span>
-            <span className="text-emerald-300 font-extrabold text-sm tracking-tight flex items-center gap-0.5">
-              ∞ <span className="text-[11px] font-bold uppercase hidden sm:inline">Leaves</span>
+            <span className="text-sm sm:text-base animate-pulse">🍃</span>
+            <span className="text-emerald-300 font-extrabold text-xs sm:text-sm tracking-tight flex items-center gap-0.5">
+              ∞ <span className="text-[10px] sm:text-[11px] font-bold uppercase hidden sm:inline">Leaves</span>
             </span>
           </button>
 
           {/* STARS COUNT */}
-          <div className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 font-bold text-xs">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+          <div className="flex items-center gap-1 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 font-bold text-xs">
+            <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
             <span>{playerProfile.totalStars}</span>
           </div>
 
@@ -113,9 +113,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
             id="dashboard-sound-toggle"
             onClick={onToggleSound}
             aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition border border-white/20 text-white/80 cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition border border-white/20 text-white/80 cursor-pointer"
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-white/40" />}
+            {soundEnabled ? <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/40" />}
           </button>
 
           {/* HOW TO PLAY */}
@@ -123,15 +123,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
             id="dashboard-how-to-play"
             onClick={onOpenHowToPlay}
             aria-label="How to play"
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition border border-white/20 text-white/80 cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition border border-white/20 text-white/80 cursor-pointer"
           >
-            <HelpCircle className="w-4 h-4" />
+            <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="w-full max-w-2xl px-4 py-6 flex flex-col gap-6">
+      <main className="w-full max-w-2xl px-3 sm:px-4 py-4 sm:py-6 flex flex-col gap-5 sm:gap-6">
         {/* UNLIMITED LEAVES HERO BANNER */}
         <div
           onClick={() => setShowLeavesModal(true)}
