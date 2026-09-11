@@ -17,7 +17,7 @@ export const ActionControls: React.FC<ActionControlsProps> = ({
   onReset,
 }) => {
   return (
-    <div className="w-full max-w-[420px] mx-auto px-3 xs:px-4 py-1.5 sm:py-2.5 flex items-center justify-between select-none">
+    <div className="w-full max-w-[460px] mx-auto px-3 xs:px-4 py-1.5 sm:py-2.5 flex items-center justify-between select-none">
       {/* Undo & Redo on the left */}
       <div className="flex items-center gap-2 xs:gap-3">
         <button

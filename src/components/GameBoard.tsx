@@ -49,10 +49,50 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   // Dynamic board sizing responsive to both screen width and vertical height
-  const isLargeGrid = cols >= 9;
-  const boardSizeConstraint = isLargeGrid
-    ? 'min(94vw, calc(100dvh - 200px), 410px)'
-    : 'min(84vw, calc(100dvh - 220px), 330px)';
+  const isLargeGrid = cols >= 8;
+  const boardSizeConstraint =
+    cols <= 5
+      ? 'min(95vw, calc(100dvh - 190px), 460px)'
+      : cols <= 7
+      ? 'min(96vw, calc(100dvh - 180px), 480px)'
+      : 'min(98vw, calc(100dvh - 170px), 520px)';
+
+  // Helper for sizing operator symbols (+, -, ×, ÷, =) prominently
+  const getOperatorSizeClass = (val: string) => {
+    const isEquals = val === '=';
+    if (cols <= 5) {
+      return isEquals
+        ? 'text-2xl xs:text-3xl sm:text-4xl'
+        : 'text-3xl xs:text-4xl sm:text-5xl';
+    }
+    if (cols <= 7) {
+      return isEquals
+        ? 'text-xl xs:text-2xl sm:text-3xl'
+        : 'text-2xl xs:text-3xl sm:text-4xl';
+    }
+    return isEquals
+      ? 'text-base xs:text-lg sm:text-xl'
+      : 'text-lg xs:text-xl sm:text-2xl';
+  };
+
+  // Helper for sizing number digits cleanly and boldly
+  const getNumberSizeClass = (val: number | string | undefined | null) => {
+    const valStr = val?.toString() || '';
+    const isMultiDigit = valStr.length > 1;
+    if (cols <= 5) {
+      return isMultiDigit
+        ? 'text-xl xs:text-2xl sm:text-3xl'
+        : 'text-2xl xs:text-3xl sm:text-4xl';
+    }
+    if (cols <= 7) {
+      return isMultiDigit
+        ? 'text-base xs:text-lg sm:text-xl'
+        : 'text-xl xs:text-2xl sm:text-3xl';
+    }
+    return isMultiDigit
+      ? 'text-xs xs:text-sm sm:text-base'
+      : 'text-sm xs:text-base sm:text-lg';
+  };
 
   return (
     <div className="w-full flex-1 min-h-0 flex items-center justify-center p-1 sm:p-2 overflow-hidden select-none">
@@ -61,10 +101,10 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         style={{
           gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
-          gap: isLargeGrid ? '3px' : '6px',
+          gap: cols <= 5 ? '6px' : cols <= 7 ? '4px' : '3px',
           width: boardSizeConstraint,
           height: boardSizeConstraint,
-          padding: isLargeGrid ? '2px' : '4px',
+          padding: cols <= 5 ? '4px' : '2px',
         }}
       >
         {Array.from({ length: rows }).flatMap((_, r) =>
@@ -89,7 +129,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
             // Render Operators with crisp, bold, high-contrast symbols (+, -, ×, ÷, =)
             if (isOperator) {
-              const isEquals = cell.value === '=';
               let operatorClasses = 'tile-3d-white text-slate-950 border border-slate-200/90 shadow-[0_2.5px_0_#94a3b8] sm:shadow-[0_3.5px_0_#94a3b8]';
 
               if (isInActiveEquation) {
@@ -102,18 +141,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                 <div
                   key={id}
                   id={`cell-${id}`}
-                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl font-black select-none transition-all ${operatorClasses}`}
+                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl font-black select-none transition-all ${operatorClasses}`}
                 >
                   <span
-                    className={`leading-none font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${
-                      isLargeGrid
-                        ? isEquals
-                          ? 'text-xs sm:text-sm md:text-base'
-                          : 'text-sm sm:text-base md:text-lg'
-                        : isEquals
-                        ? 'text-sm sm:text-base md:text-lg'
-                        : 'text-base sm:text-lg md:text-xl'
-                    }`}
+                    className={`leading-none font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${getOperatorSizeClass(
+                      cell.value as string
+                    )}`}
                   >
                     {cell.value}
                   </span>
@@ -123,8 +156,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
             // Render Given Numbers with prominent high-contrast styling
             if (isGiven) {
-              const valStr = cell.value?.toString() || '';
-              const isMultiDigit = valStr.length > 1;
               let givenClasses = 'tile-3d-white text-slate-950 border border-slate-200/90 shadow-[0_2.5px_0_#94a3b8] sm:shadow-[0_3.5px_0_#94a3b8]';
 
               if (isInActiveEquation) {
@@ -137,18 +168,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                 <div
                   key={id}
                   id={`cell-${id}`}
-                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl font-black select-none transition-all ${givenClasses}`}
+                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl font-black select-none transition-all ${givenClasses}`}
                 >
                   <span
-                    className={`leading-none tabular-nums font-black tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${
-                      isLargeGrid
-                        ? isMultiDigit
-                          ? 'text-[11px] xs:text-xs sm:text-sm'
-                          : 'text-xs xs:text-sm sm:text-base'
-                        : isMultiDigit
-                        ? 'text-sm sm:text-base'
-                        : 'text-base sm:text-lg'
-                    }`}
+                    className={`leading-none tabular-nums font-black tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${getNumberSizeClass(
+                      cell.value
+                    )}`}
                   >
                     {cell.value}
                   </span>
@@ -159,9 +184,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             // Render Slot (Empty or Filled with user placed Green tile)
             if (isSlot) {
               if (hasPlacedNumber) {
-                const valStr = cell.currentValue!.toString();
-                const isMultiDigit = valStr.length > 1;
-
                 let placedClasses = 'tile-3d-green text-[#052e16]';
                 if (isError) {
                   placedClasses = 'bg-gradient-to-b from-rose-100 to-rose-200 text-rose-950 border border-rose-300 shadow-[0_3px_0_#e11d48] ring-2 ring-rose-500 animate-pulse';
@@ -182,20 +204,14 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                     onDragLeave={handleDragLeave}
                     onDrop={(e) => handleDrop(e, id)}
                     aria-label={`Slot at row ${r + 1} column ${c + 1} with number ${cell.currentValue}. Tap to remove`}
-                    className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl font-black transition-all cursor-pointer relative ${placedClasses} ${
+                    className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl font-black transition-all cursor-pointer relative ${placedClasses} ${
                       cell.isHinted ? 'ring-2 ring-amber-300 ring-offset-1 ring-offset-purple-900' : ''
                     }`}
                   >
                     <span
-                      className={`leading-none tabular-nums font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.4)] ${
-                        isLargeGrid
-                          ? isMultiDigit
-                            ? 'text-[11px] xs:text-xs sm:text-sm'
-                            : 'text-xs xs:text-sm sm:text-base'
-                          : isMultiDigit
-                          ? 'text-sm sm:text-base'
-                          : 'text-base sm:text-lg'
-                      }`}
+                      className={`leading-none tabular-nums font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.4)] ${getNumberSizeClass(
+                        cell.currentValue
+                      )}`}
                     >
                       {cell.currentValue}
                     </span>
@@ -225,7 +241,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, id)}
                   aria-label={`Empty slot at row ${r + 1} column ${c + 1}. Tap or drag number here`}
-                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl transition-all cursor-pointer ${slotClasses}`}
+                  className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl transition-all cursor-pointer ${slotClasses}`}
                 >
                   <span className="sr-only">Empty slot</span>
                 </button>
