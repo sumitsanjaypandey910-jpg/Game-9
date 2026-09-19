@@ -52,10 +52,10 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   const isLargeGrid = cols >= 8;
   const boardSizeConstraint =
     cols <= 5
-      ? 'min(95vw, calc(100dvh - 190px), 460px)'
+      ? 'min(95vw, calc(100dvh - 225px), 440px)'
       : cols <= 7
-      ? 'min(96vw, calc(100dvh - 180px), 480px)'
-      : 'min(98vw, calc(100dvh - 170px), 520px)';
+      ? 'min(96vw, calc(100dvh - 215px), 460px)'
+      : 'min(98vw, calc(100dvh - 205px), 490px)';
 
   // Helper for sizing operator symbols (+, -, ×, ÷, =) prominently
   const getOperatorSizeClass = (val: string) => {
@@ -129,12 +129,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
             // Render Operators with crisp, bold, high-contrast symbols (+, -, ×, ÷, =)
             if (isOperator) {
-              let operatorClasses = 'tile-3d-white text-slate-950 border border-slate-200/90 shadow-[0_2.5px_0_#94a3b8] sm:shadow-[0_3.5px_0_#94a3b8]';
+              let operatorClasses = 'tile-3d-white text-slate-950 border border-slate-200/90';
 
               if (isInActiveEquation) {
-                operatorClasses = 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400/90 shadow-[0_2.5px_0_#d97706]';
+                operatorClasses = 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400/90 shadow-[0_4px_0_#d97706]';
               } else if (isInSolvedEquation) {
-                operatorClasses = 'bg-emerald-50 text-emerald-950 border-emerald-300 ring-1 ring-emerald-400/80 shadow-[0_2.5px_0_#16a34a]';
+                operatorClasses = 'bg-emerald-50 text-emerald-950 border-emerald-300 ring-1 ring-emerald-400/80 shadow-[0_4px_0_#16a34a]';
               }
 
               return (
@@ -144,7 +144,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                   className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl font-black select-none transition-all ${operatorClasses}`}
                 >
                   <span
-                    className={`leading-none font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${getOperatorSizeClass(
+                    className={`leading-none font-black num-3d-white ${getOperatorSizeClass(
                       cell.value as string
                     )}`}
                   >
@@ -156,12 +156,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
             // Render Given Numbers with prominent high-contrast styling
             if (isGiven) {
-              let givenClasses = 'tile-3d-white text-slate-950 border border-slate-200/90 shadow-[0_2.5px_0_#94a3b8] sm:shadow-[0_3.5px_0_#94a3b8]';
+              let givenClasses = 'tile-3d-white text-slate-950 border border-slate-200/90';
 
               if (isInActiveEquation) {
-                givenClasses = 'bg-amber-50 text-slate-950 border-amber-300 ring-2 ring-amber-300 shadow-[0_2.5px_0_#d97706]';
+                givenClasses = 'bg-amber-50 text-slate-950 border-amber-300 ring-2 ring-amber-300 shadow-[0_4px_0_#d97706]';
               } else if (isInSolvedEquation) {
-                givenClasses = 'bg-emerald-50 text-emerald-950 border-emerald-300 ring-1 ring-emerald-400 shadow-[0_2.5px_0_#16a34a]';
+                givenClasses = 'bg-emerald-50 text-emerald-950 border-emerald-300 ring-1 ring-emerald-400 shadow-[0_4px_0_#16a34a]';
               }
 
               return (
@@ -171,7 +171,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                   className={`w-full h-full flex items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl font-black select-none transition-all ${givenClasses}`}
                 >
                   <span
-                    className={`leading-none tabular-nums font-black tracking-tight drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] ${getNumberSizeClass(
+                    className={`leading-none tabular-nums font-black tracking-tight num-3d-white ${getNumberSizeClass(
                       cell.value
                     )}`}
                   >
@@ -186,11 +186,11 @@ export const GameBoard: React.FC<GameBoardProps> = ({
               if (hasPlacedNumber) {
                 let placedClasses = 'tile-3d-green text-[#052e16]';
                 if (isError) {
-                  placedClasses = 'bg-gradient-to-b from-rose-100 to-rose-200 text-rose-950 border border-rose-300 shadow-[0_3px_0_#e11d48] ring-2 ring-rose-500 animate-pulse';
+                  placedClasses = 'bg-gradient-to-b from-rose-100 to-rose-200 text-rose-950 border border-rose-300 shadow-[0_4px_0_#e11d48] ring-2 ring-rose-500 animate-pulse';
                 } else if (isSelected) {
                   placedClasses = 'tile-3d-green-selected ring-3 ring-amber-300';
                 } else if (isInSolvedEquation) {
-                  placedClasses = 'tile-3d-green ring-2 ring-emerald-400 shadow-[0_3px_0_#15803d,0_0_8px_rgba(74,222,128,0.5)]';
+                  placedClasses = 'tile-3d-green ring-2 ring-emerald-400 shadow-[0_4px_0_#15803d,0_0_10px_rgba(74,222,128,0.5)]';
                 } else if (isInActiveEquation) {
                   placedClasses = 'tile-3d-green ring-2 ring-amber-300/80';
                 }
@@ -209,7 +209,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                     }`}
                   >
                     <span
-                      className={`leading-none tabular-nums font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.4)] ${getNumberSizeClass(
+                      className={`leading-none tabular-nums font-black num-3d-green ${getNumberSizeClass(
                         cell.currentValue
                       )}`}
                     >
