@@ -317,6 +317,15 @@ export const LEVEL_4: LevelData = {
 // ----------------------------------------------------
 // LEVEL 5: Number Labyrinth (Hard - 9x9)
 // ----------------------------------------------------
+// Fully connected, mathematically verified 9x9 matrix:
+// 1. R0 (c=2..6): [48] ÷ 6 = [8]
+// 2. C2 (r=0..4): [48] - [32] = [16]
+// 3. R2 (c=2..6): [32] - 15 = [17]
+// 4. C6 (r=0..4): [8] + [17] = [25]
+// 5. R4 (c=2..6): [16] + 9 = [25]
+// 6. C6 (r=4..8): [25] + [7] = [32]
+// 7. R6 (c=0..4): [14] - 8 = 6
+// 8. R8 (c=2..6): [56] - [24] = [32]
 const level5Definitions: Array<{
   r: number;
   c: number;
@@ -324,53 +333,54 @@ const level5Definitions: Array<{
   value?: number | '+' | '-' | '×' | '÷' | '=';
   solution?: number;
 }> = [
-  // R0: [48] ÷ 6 = [8]
+  // R0 (c=2..6): [48] ÷ 6 = [8]
   { r: 0, c: 2, type: 'slot', solution: 48 },
   { r: 0, c: 3, type: 'operator', value: '÷' },
   { r: 0, c: 4, type: 'given', value: 6 },
   { r: 0, c: 5, type: 'operator', value: '=' },
   { r: 0, c: 6, type: 'slot', solution: 8 },
 
-  // R1: operators
+  // C2 & C6 upper operators
   { r: 1, c: 2, type: 'operator', value: '-' },
-  { r: 1, c: 6, type: 'operator', value: '×' },
+  { r: 1, c: 6, type: 'operator', value: '+' },
 
-  // R2: [32] ... [7] = [56]
+  // R2 (c=2..6): [32] - 15 = [17]
   { r: 2, c: 2, type: 'slot', solution: 32 },
-  { r: 2, c: 6, type: 'slot', solution: 7 },
-  { r: 2, c: 7, type: 'operator', value: '=' },
-  { r: 2, c: 8, type: 'slot', solution: 56 },
+  { r: 2, c: 3, type: 'operator', value: '-' },
+  { r: 2, c: 4, type: 'given', value: 15 },
+  { r: 2, c: 5, type: 'operator', value: '=' },
+  { r: 2, c: 6, type: 'slot', solution: 17 },
 
-  // R3: operators
+  // C2 & C6 mid operators
   { r: 3, c: 2, type: 'operator', value: '=' },
   { r: 3, c: 6, type: 'operator', value: '=' },
-  { r: 3, c: 8, type: 'operator', value: '-' },
 
-  // R4: [16] + 9 = [25] ... [24]
+  // R4 (c=2..6): [16] + 9 = [25]
   { r: 4, c: 2, type: 'slot', solution: 16 },
   { r: 4, c: 3, type: 'operator', value: '+' },
   { r: 4, c: 4, type: 'given', value: 9 },
   { r: 4, c: 5, type: 'operator', value: '=' },
   { r: 4, c: 6, type: 'slot', solution: 25 },
-  { r: 4, c: 8, type: 'slot', solution: 24 },
 
-  // R5: operators
+  // C6 lower operator
   { r: 5, c: 6, type: 'operator', value: '+' },
-  { r: 5, c: 8, type: 'operator', value: '=' },
 
-  // R6: [14] - 8 = 6 ... [7] ... [32]
+  // R6 (c=0..4): [14] - 8 = 6 & C6 (r=6): [7]
   { r: 6, c: 0, type: 'slot', solution: 14 },
   { r: 6, c: 1, type: 'operator', value: '-' },
   { r: 6, c: 2, type: 'given', value: 8 },
   { r: 6, c: 3, type: 'operator', value: '=' },
   { r: 6, c: 4, type: 'given', value: 6 },
   { r: 6, c: 6, type: 'slot', solution: 7 },
-  { r: 6, c: 8, type: 'slot', solution: 32 },
 
-  // R7: operators
+  // C6 bottom operator
   { r: 7, c: 6, type: 'operator', value: '=' },
 
-  // R8: [32]
+  // R8 (c=2..6): [56] - [24] = [32]
+  { r: 8, c: 2, type: 'slot', solution: 56 },
+  { r: 8, c: 3, type: 'operator', value: '-' },
+  { r: 8, c: 4, type: 'slot', solution: 24 },
+  { r: 8, c: 5, type: 'operator', value: '=' },
   { r: 8, c: 6, type: 'slot', solution: 32 },
 ];
 
@@ -381,12 +391,21 @@ export const LEVEL_5: LevelData = {
   rows: 9,
   cols: 9,
   cells: buildGrid(9, 9, level5Definitions),
-  rackValues: [7, 8, 14, 16, 24, 25, 32, 32, 32, 48, 56],
+  rackValues: [7, 8, 14, 16, 17, 24, 25, 32, 32, 48, 56],
 };
 
 // ----------------------------------------------------
 // LEVEL 6: Expert Matrix (Expert - 7x7)
 // ----------------------------------------------------
+// Fully connected 7x7 Crossmath matrix:
+// 1. R0 (c=0..4): [84] ÷ 7 = [12]
+// 2. C0 (r=0..4): [84] - [36] = [48]
+// 3. R4 (c=0..4): [48] - [19] = [29]
+// 4. C4 (r=0..4): [12] + [17] = [29]
+// 5. R2 (c=2..6): [20] × 3 = [60]
+// 6. C2 (r=2..6): [20] + [19] = [39]
+// 7. R6 (c=2..6): [39] - 14 = [25]
+// 8. C6 (r=2..6): [60] - 35 = [25]
 const level6Definitions: Array<{
   r: number;
   c: number;
@@ -394,41 +413,49 @@ const level6Definitions: Array<{
   value?: number | '+' | '-' | '×' | '÷' | '=';
   solution?: number;
 }> = [
-  // R0: [84] ÷ 7 = [12]
+  // R0 (c=0..4): [84] ÷ 7 = [12]
   { r: 0, c: 0, type: 'slot', solution: 84 },
   { r: 0, c: 1, type: 'operator', value: '÷' },
   { r: 0, c: 2, type: 'given', value: 7 },
   { r: 0, c: 3, type: 'operator', value: '=' },
   { r: 0, c: 4, type: 'slot', solution: 12 },
 
-  // R1: operators
+  // C0 & C4 upper operators
   { r: 1, c: 0, type: 'operator', value: '-' },
-  { r: 1, c: 4, type: 'operator', value: '×' },
+  { r: 1, c: 4, type: 'operator', value: '+' },
 
-  // R2: [36] ... [6] = [72]
+  // R2 (c=2..6): [20] × 3 = [60] & C0 (r=2): [36]
   { r: 2, c: 0, type: 'slot', solution: 36 },
-  { r: 2, c: 4, type: 'slot', solution: 6 },
+  { r: 2, c: 2, type: 'slot', solution: 20 },
+  { r: 2, c: 3, type: 'operator', value: '×' },
+  { r: 2, c: 4, type: 'given', value: 3 },
   { r: 2, c: 5, type: 'operator', value: '=' },
-  { r: 2, c: 6, type: 'slot', solution: 72 },
+  { r: 2, c: 6, type: 'slot', solution: 60 },
 
-  // R3: operators
+  // C0 & C2 & C4 & C6 operators
   { r: 3, c: 0, type: 'operator', value: '=' },
+  { r: 3, c: 2, type: 'operator', value: '+' },
   { r: 3, c: 4, type: 'operator', value: '=' },
   { r: 3, c: 6, type: 'operator', value: '-' },
 
-  // R4: [48] - [19] = [29] ... [18] ... [27]
+  // R4 (c=0..4): [48] - [19] = [29] & C6 (r=4): 35
   { r: 4, c: 0, type: 'slot', solution: 48 },
   { r: 4, c: 1, type: 'operator', value: '-' },
   { r: 4, c: 2, type: 'slot', solution: 19 },
   { r: 4, c: 3, type: 'operator', value: '=' },
   { r: 4, c: 4, type: 'slot', solution: 29 },
-  { r: 4, c: 6, type: 'slot', solution: 27 },
+  { r: 4, c: 6, type: 'given', value: 35 },
 
-  // R5: operators
+  // C2 & C6 lower operators
+  { r: 5, c: 2, type: 'operator', value: '=' },
   { r: 5, c: 6, type: 'operator', value: '=' },
 
-  // R6: [45]
-  { r: 6, c: 6, type: 'slot', solution: 45 },
+  // R6 (c=2..6): [39] - 14 = [25]
+  { r: 6, c: 2, type: 'slot', solution: 39 },
+  { r: 6, c: 3, type: 'operator', value: '-' },
+  { r: 6, c: 4, type: 'given', value: 14 },
+  { r: 6, c: 5, type: 'operator', value: '=' },
+  { r: 6, c: 6, type: 'slot', solution: 25 },
 ];
 
 export const LEVEL_6: LevelData = {
@@ -438,7 +465,7 @@ export const LEVEL_6: LevelData = {
   rows: 7,
   cols: 7,
   cells: buildGrid(7, 7, level6Definitions),
-  rackValues: [6, 12, 19, 27, 29, 36, 45, 48, 72, 84],
+  rackValues: [12, 19, 20, 25, 29, 36, 39, 48, 60, 84],
 };
 
 // Ordered progression starting EASY and scaling up smoothly to EXPERT
